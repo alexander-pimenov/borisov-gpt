@@ -1,0 +1,65 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+
+### Giga IDE ###
+.gigaide
+.gigaide/
+
+.gradle
+!gradle/wrapper/gradle-wrapper.jar
+
+### сгенерированные JOOQ-ом классы хочу всё же запушить
+# src/main/java/ru/xpendence/jooqexample/domain/
+# !src/main/java/ru/xpendence/jooqexample/domain/.gitkeep
+
+### Local Ollama directory ###
+docker-compose-for-app/ollama/
+### Local Postgres directory ###
+docker-compose-for-app/postgres/data/
+
+
