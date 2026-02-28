@@ -1,0 +1,67 @@
+#version: '3.7'
+services:
+  postgres:
+#    версия с расширением на pgvector, т.к. нужно будет настраивать RAG, т.е. это векторная БД
+    image: docker.io/ankane/pgvector:v0.5.0
+#    image: docker.io/postgres:15.8-alpine
+    container_name: postgres-db
+    restart: always
+    environment:
+      - POSTGRES_DB=ragdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGPASSWORD=postgres
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/scripts:/docker-entrypoint-initdb.d:Z #скрипты инициализации БД
+    healthcheck:
+#      test: "pg_isready -U postgres -d ragdb"
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d ragdb" ]
+      interval: 2s
+      timeout: 20s
+      retries: 10
+    networks:
+      - postgres-net
+#Использую локальный DBeaver, поэтому закомментировал:
+#  pgadmin:
+#    container_name: pgadmin_container
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+#    volumes:
+#      - ./servers.json:/pgadmin4/servers.json
+#    ports:
+#      - "${PGADMIN_PORT:-5050}:80"
+
+  ollama:
+    image: docker.io/ollama/ollama
+    container_name: ollama
+    ports:
+      - "11431:11434"
+    volumes:
+      - ./ollama:/root/.ollama
+    entrypoint: >
+      /bin/sh -c "
+        ollama serve &
+        sleep 3 &&
+        ollama pull gemma3:4b-it-q4_K_M &&
+        ollama pull mxbai-embed-large &&
+        wait
+      "
+    restart: unless-stopped
+    networks:
+      - postgres-net
+
+
+networks:
+  postgres-net:
+    external: true
+    name: postgres-net
+    driver: bridge
