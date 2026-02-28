@@ -66,7 +66,8 @@ public class DocumentLoaderService implements CommandLineRunner {
 
 
     /**
-     * Загружает документы из директории {@code classpath:/knowledgebase/**/*.txt} в векторное хранилище.
+     *
+     * Загружает документы из директории {@code classpath:/knowledgebase/*.txt} в векторное хранилище.
      * <p>
      * Процесс загрузки:
      * <ol>
@@ -114,8 +115,6 @@ public class DocumentLoaderService implements CommandLineRunner {
                     documentRepository.save(loadedDocument);
 
                 });
-
-
     }
 
     /**
