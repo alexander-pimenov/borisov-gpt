@@ -58,8 +58,8 @@ bin/
 # !src/main/java/ru/xpendence/jooqexample/domain/.gitkeep
 
 ### Local Ollama directory ###
-#docker-compose-for-app/ollama/
+docker-compose-for-app/ollama/
 ### Local Postgres directory ###
-#docker-compose-for-app/postgres/data/
+docker-compose-for-app/postgres/data/
 
 
